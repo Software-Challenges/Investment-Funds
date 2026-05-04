@@ -1,3 +1,8 @@
+# Context
+server:
+  servlet:
+    context-path: /api/v1
+
 # Application
 spring:
   application:
@@ -13,3 +18,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+
+  sql:
+    init:
+      mode: always
