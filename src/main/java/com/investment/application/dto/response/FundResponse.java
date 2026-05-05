@@ -2,6 +2,7 @@ package com.investment.application.dto.response;
 
 import com.investment.domain.enums.EFundCategory;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record FundResponse(
@@ -10,5 +11,6 @@ public record FundResponse(
         String name,
         BigDecimal minimumAmount,
         EFundCategory category,
-        Boolean isActive
+        Boolean isActive,
+        LocalDateTime createdAt
 ) { }

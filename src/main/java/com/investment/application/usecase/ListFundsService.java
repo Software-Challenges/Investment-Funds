@@ -26,7 +26,8 @@ public class ListFundsService implements IListFundsUseCase {
                                                                         fund.getName(),
                                                                         fund.getMinimumAmount(),
                                                                         fund.getCategory(),
-                                                                        fund.getIsActive()))
+                                                                        fund.getIsActive(),
+                                                                        fund.getCreatedAt()))
                                                                 .toList();
 
         return PagedResponse.<FundResponse>builder()

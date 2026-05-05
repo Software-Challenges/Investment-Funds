@@ -14,9 +14,9 @@ import java.util.UUID;
 public class Subscription {
     private UUID id;
     private BigDecimal amount;
+    private User user;
+    private Fund fund;
     private ESubscriptionStatus status;
     private LocalDateTime subscribedAt;
     private LocalDateTime cancelledAt;
-    private User user;
-    private Fund fund;
 }

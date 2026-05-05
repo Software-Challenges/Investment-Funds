@@ -9,6 +9,7 @@ import com.investment.infrastructure.entity.FundEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -29,10 +30,10 @@ public class FundPersistenceAdapter implements IFundPersistencePort {
 
     @Override
     public PagedResponse<Fund> findAll(int page, int size, Boolean isActive) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "createdAt"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<FundEntity> entityPage = (isActive == null)
-                                      ? repository.findAll(pageRequest)
-                                      : repository.findByIsActive(isActive, pageRequest);
+                                      ? repository.findAll(pageable)
+                                      : repository.findByIsActive(isActive, pageable);
 
         List<Fund> funds = mapper.toDomainList(entityPage.getContent());
 
