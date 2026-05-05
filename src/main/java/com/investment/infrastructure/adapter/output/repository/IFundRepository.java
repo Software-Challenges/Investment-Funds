@@ -4,8 +4,9 @@ import com.investment.infrastructure.entity.FundEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
 import java.util.UUID;
 
-public interface IFundRepository extends JpaRepository<FundEntity, UUID> {
-    Page<FundEntity> findByIsActive(Boolean isActive, Pageable pageable);
-}
+public interface IFundRepository extends JpaRepository<FundEntity, UUID>,
+                                         JpaSpecificationExecutor<FundEntity> { }

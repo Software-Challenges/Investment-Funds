@@ -1,5 +1,6 @@
 package com.investment.application.usecase;
 
+import com.investment.application.dto.request.FundFilterRequest;
 import com.investment.application.dto.response.FundResponse;
 import com.investment.application.dto.response.PagedResponse;
 import com.investment.application.port.input.IListFundsUseCase;
@@ -17,8 +18,8 @@ public class ListFundsService implements IListFundsUseCase {
     private final IFundPersistencePort fundPort;
 
     @Override
-    public PagedResponse<FundResponse> execute(int page, int size, Boolean isActive) {
-        PagedResponse<Fund> response = fundPort.findAll(page, size, isActive);
+    public PagedResponse<FundResponse> execute(int page, int size, FundFilterRequest filters) {
+        PagedResponse<Fund> response = fundPort.findAll(page, size, filters);
 
         List<FundResponse> fundResponseList = response.content().stream()
                                                                 .map(fund -> new FundResponse(fund.getId(),

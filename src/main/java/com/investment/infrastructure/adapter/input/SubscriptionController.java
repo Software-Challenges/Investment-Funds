@@ -1,6 +1,7 @@
 package com.investment.infrastructure.adapter.input;
 
 import com.investment.application.dto.request.SubscriptionFilterRequest;
+import com.investment.application.dto.response.ApiResponse;
 import com.investment.application.dto.response.PagedResponse;
 import com.investment.application.dto.response.SubscriptionResponse;
 import com.investment.application.port.input.IListSubscriptionsUseCase;
@@ -21,13 +22,13 @@ public class SubscriptionController {
     private final IListSubscriptionsUseCase useCase;
 
     @GetMapping
-    public ResponseEntity<PagedResponse<SubscriptionResponse>> getAllSubscriptions(@RequestParam(required = false, defaultValue = "0") int page,
-                                                                                   @RequestParam(required = false, defaultValue = "25") int size,
-                                                                                   @RequestParam(required = false)ESubscriptionStatus status,
-                                                                                   @RequestParam(required = false) UUID userId,
-                                                                                   @RequestParam(required = false) UUID fundId,
-                                                                                   @RequestParam(required = false) LocalDate cancelledFrom,
-                                                                                   @RequestParam(required = false) LocalDate cancelledTo) {
+    public ResponseEntity<ApiResponse<PagedResponse<SubscriptionResponse>>> getAllSubscriptions(@RequestParam(required = false, defaultValue = "0") int page,
+                                                           @RequestParam(required = false, defaultValue = "25") int size,
+                                                           @RequestParam(required = false) ESubscriptionStatus status,
+                                                           @RequestParam(required = false) UUID userId,
+                                                           @RequestParam(required = false) UUID fundId,
+                                                           @RequestParam(required = false) LocalDate cancelledFrom,
+                                                           @RequestParam(required = false) LocalDate cancelledTo) {
         SubscriptionFilterRequest filters = SubscriptionFilterRequest.builder()
                                                                      .status(status)
                                                                      .userId(userId)
@@ -36,6 +37,8 @@ public class SubscriptionController {
                                                                      .cancelledTo(cancelledTo)
                                                                      .build();
 
-        return ResponseEntity.ok(useCase.execute(page, size, filters));
+        PagedResponse<SubscriptionResponse> response = useCase.execute(page, size, filters);
+
+        return ResponseEntity.ok(new ApiResponse<>(200, "Subscriptions retrieved successfully", response));
     }
 }

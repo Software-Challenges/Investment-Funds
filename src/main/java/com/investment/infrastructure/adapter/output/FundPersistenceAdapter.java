@@ -1,10 +1,12 @@
 package com.investment.infrastructure.adapter.output;
 
+import com.investment.application.dto.request.FundFilterRequest;
 import com.investment.application.dto.response.PagedResponse;
 import com.investment.application.port.output.IFundPersistencePort;
 import com.investment.domain.model.Fund;
 import com.investment.infrastructure.adapter.output.mapper.FundMapper;
 import com.investment.infrastructure.adapter.output.repository.IFundRepository;
+import com.investment.infrastructure.adapter.output.specification.FundSpecification;
 import com.investment.infrastructure.entity.FundEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,11 +31,11 @@ public class FundPersistenceAdapter implements IFundPersistencePort {
     }
 
     @Override
-    public PagedResponse<Fund> findAll(int page, int size, Boolean isActive) {
+    public PagedResponse<Fund> findAll(int page, int size, FundFilterRequest filters) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-        Page<FundEntity> entityPage = (isActive == null)
+        Page<FundEntity> entityPage = (filters == null && !filters.hasFilter())
                                       ? repository.findAll(pageable)
-                                      : repository.findByIsActive(isActive, pageable);
+                                      : repository.findAll(FundSpecification.withFilters(filters), pageable);
 
         List<Fund> funds = mapper.toDomainList(entityPage.getContent());
 
