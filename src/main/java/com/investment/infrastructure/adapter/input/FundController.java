@@ -1,26 +1,26 @@
 package com.investment.infrastructure.adapter.input;
 
 import com.investment.application.dto.request.FundFilterRequest;
+import com.investment.application.dto.request.SaveFundRequest;
 import com.investment.application.dto.response.ApiResponse;
 import com.investment.application.dto.response.FundResponse;
 import com.investment.application.dto.response.PagedResponse;
 import com.investment.application.port.input.IListFundsUseCase;
+import com.investment.application.port.input.ISaveFundUseCase;
 import com.investment.domain.enums.EFundCategory;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 
 @RestController
 @RequestMapping(path = "funds")
 @RequiredArgsConstructor
 public class FundController {
-    private final IListFundsUseCase useCase;
+    private final IListFundsUseCase listFundsUseCase;
+    private final ISaveFundUseCase saveFundUseCase;
 
     @GetMapping
     public ResponseEntity<ApiResponse<PagedResponse<FundResponse>>> getAllFunds(@RequestParam(required = false, defaultValue = "0") int page,
@@ -36,8 +36,17 @@ public class FundController {
                                                      .isActive(isActive)
                                                      .build();
 
-        PagedResponse<FundResponse> response = useCase.execute(page, size, filters);
+        PagedResponse<FundResponse> response = listFundsUseCase.execute(page, size, filters);
 
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(), "Funds retrieved successfully", response));
+    }
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<FundResponse>> saveNewFund(@Valid @RequestBody SaveFundRequest request) {
+        FundResponse response = saveFundUseCase.execute(request);
+
+        return new ResponseEntity<>(new ApiResponse<>(HttpStatus.CREATED.value(),
+                                              "Fund created successfully", response),
+                                                      HttpStatus.CREATED);
     }
 }

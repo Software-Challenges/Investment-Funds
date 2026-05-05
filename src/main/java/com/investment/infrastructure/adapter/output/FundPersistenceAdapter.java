@@ -56,7 +56,6 @@ public class FundPersistenceAdapter implements IFundPersistencePort {
                                          .name(fund.getName())
                                          .minimumAmount(fund.getMinimumAmount())
                                          .category(fund.getCategory())
-                                         .isActive(true)
                                          .build();
 
         return mapper.toDomain(repository.save(newEntity));
