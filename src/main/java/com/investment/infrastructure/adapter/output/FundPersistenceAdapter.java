@@ -50,14 +50,18 @@ public class FundPersistenceAdapter implements IFundPersistencePort {
     }
 
     @Override
-    public Fund save(Fund fund) {
-        FundEntity newEntity = FundEntity.builder()
-                                         .code(fund.getCode())
-                                         .name(fund.getName())
-                                         .minimumAmount(fund.getMinimumAmount())
-                                         .category(fund.getCategory())
-                                         .build();
+    public boolean existsByCode(String code) {
+        return repository.existsByCode(code);
+    }
 
+    @Override
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+    }
+
+    @Override
+    public Fund save(Fund fund) {
+        FundEntity newEntity = mapper.toEntity(fund);
         return mapper.toDomain(repository.save(newEntity));
     }
 

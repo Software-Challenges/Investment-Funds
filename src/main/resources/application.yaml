@@ -22,3 +22,10 @@ spring:
   sql:
     init:
       mode: always
+
+#Security config
+security:
+  jwt:
+    issuer: investment-funds-app
+    secret-key: MyAppSecretKey
+    expiration: 1800000

@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface FundMapper {
     Fund toDomain(FundEntity entity);
+    FundEntity toEntity(Fund domain);
 
     List<Fund> toDomainList(List<FundEntity> entities);
 }

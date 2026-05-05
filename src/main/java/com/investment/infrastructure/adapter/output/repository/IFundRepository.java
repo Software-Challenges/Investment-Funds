@@ -9,4 +9,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.UUID;
 
 public interface IFundRepository extends JpaRepository<FundEntity, UUID>,
-                                         JpaSpecificationExecutor<FundEntity> { }
+                                         JpaSpecificationExecutor<FundEntity> {
+    boolean existsByCode(String code);
+
+    boolean existsByName(String name);
+}
