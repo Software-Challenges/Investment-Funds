@@ -49,7 +49,7 @@ CREATE TABLE funds (
     updated_at TIMESTAMP,
 
     CONSTRAINT chk_funds_minimum_amount_positive CHECK (minimum_amount > 0),
-    CONSTRAINT chk_funds_category CHECK (category IN ('FPV', 'FIC'))
+    CONSTRAINT chk_funds_category CHECK (category IN ('FPV', 'FIC', 'EQUITY', 'FIXED_INCOME', 'MONEY_MARKET', 'BALANCED', 'REAL_ESTATE', 'INTERNATIONAL', 'PRIVATE_DEBT', 'ALTERNATIVE'))
 );
 
 CREATE TABLE subscriptions (

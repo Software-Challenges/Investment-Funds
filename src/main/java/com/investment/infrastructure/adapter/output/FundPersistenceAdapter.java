@@ -3,6 +3,7 @@ package com.investment.infrastructure.adapter.output;
 import com.investment.application.dto.request.FundFilterRequest;
 import com.investment.application.dto.response.PagedResponse;
 import com.investment.application.port.output.IFundPersistencePort;
+import com.investment.domain.enums.EFundCategory;
 import com.investment.domain.model.Fund;
 import com.investment.infrastructure.adapter.output.mapper.FundMapper;
 import com.investment.infrastructure.adapter.output.repository.IFundRepository;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @RequiredArgsConstructor
@@ -50,19 +52,23 @@ public class FundPersistenceAdapter implements IFundPersistencePort {
     }
 
     @Override
-    public boolean existsByCode(String code) {
-        return repository.existsByCode(code);
-    }
-
-    @Override
     public boolean existsByName(String name) {
         return repository.existsByName(name);
     }
 
     @Override
     public Fund save(Fund fund) {
+        String newCode = generateCode(fund.getCategory());
+        fund.setCode(newCode);
+
         FundEntity newEntity = mapper.toEntity(fund);
+
         return mapper.toDomain(repository.save(newEntity));
+    }
+
+    private String generateCode(EFundCategory category) {
+        int randomNumber = ThreadLocalRandom.current().nextInt(0, 1000);
+        return category.name() + "-" + randomNumber;
     }
 
     @Override
@@ -72,7 +78,6 @@ public class FundPersistenceAdapter implements IFundPersistencePort {
         if (entity.isEmpty()) return Optional.empty();
 
         FundEntity entityFound = entity.get();
-        entityFound.setCode(fund.getCode());
         entityFound.setName(fund.getName());
         entityFound.setMinimumAmount(fund.getMinimumAmount());
         entityFound.setCategory(fund.getCategory());

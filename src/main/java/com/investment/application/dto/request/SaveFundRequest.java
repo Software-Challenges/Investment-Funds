@@ -7,9 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public record SaveFundRequest(
-        @NotBlank(message = "Code is required")
-        String code,
-
         @NotBlank(message = "Name is required")
         String name,
 

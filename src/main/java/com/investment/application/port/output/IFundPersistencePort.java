@@ -11,8 +11,6 @@ public interface IFundPersistencePort {
 
     PagedResponse<Fund> findAll(int page, int size, FundFilterRequest filters);
 
-    boolean existsByCode(String code);
-
     boolean existsByName(String name);
 
     Fund save(Fund fund);

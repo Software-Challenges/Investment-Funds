@@ -16,11 +16,12 @@ public class SaveFundService implements ISaveFundUseCase {
 
     @Override
     public FundResponse execute(SaveFundRequest request) {
-        validateFundDoesNotExist(request);
+        if (fundPort.existsByName(request.name())) {
+            throw new FundAlreadyExistsException("A fund with this name already exists");
+        }
 
         Fund newFund = Fund.builder()
                            .name(request.name())
-                           .code(request.code())
                            .minimumAmount(request.minimumAmount())
                            .category(request.category())
                            .build();
@@ -36,15 +37,5 @@ public class SaveFundService implements ISaveFundUseCase {
                            .isActive(fundSaved.getIsActive())
                            .createdAt(fundSaved.getCreatedAt())
                            .build();
-    }
-
-    private void validateFundDoesNotExist(SaveFundRequest request) {
-        if (fundPort.existsByCode(request.code())) {
-            throw new FundAlreadyExistsException("A fund with this code already exists");
-        }
-
-        if (fundPort.existsByName(request.name())) {
-            throw new FundAlreadyExistsException("A fund with this name already exists");
-        }
     }
 }
