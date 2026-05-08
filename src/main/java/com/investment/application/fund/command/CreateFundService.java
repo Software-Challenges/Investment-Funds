@@ -26,7 +26,7 @@ public class CreateFundService implements ICreateFundUseCase {
                            .category(request.category())
                            .build();
 
-        Fund fundSaved = fundPort.save(newFund);
+        Fund fundSaved = fundPort.create(newFund);
 
         return FundResponse.builder()
                            .id(fundSaved.getId())

@@ -6,11 +6,13 @@ import com.investment.application.fund.port.output.IFundPersistencePort;
 import com.investment.domain.model.Fund;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class GetFundByIdService implements IGetFundByIdQuery {
     private final IFundPersistencePort fundPort;
 

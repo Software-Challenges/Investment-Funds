@@ -57,7 +57,7 @@ public class FundPersistenceAdapter implements IFundPersistencePort {
     }
 
     @Override
-    public Fund save(Fund fund) {
+    public Fund create(Fund fund) {
         String newCode = generateCode(fund.getCategory());
         fund.setCode(newCode);
 
@@ -89,12 +89,16 @@ public class FundPersistenceAdapter implements IFundPersistencePort {
     }
 
     @Override
-    public void delete(UUID fundId) {
+    public boolean desactivate(UUID fundId) {
         Optional<FundEntity> entity = repository.findById(fundId);
 
-        entity.ifPresent(e -> {
-            e.setIsActive(false);
-            repository.save(e);
-        });
+        if (entity.isEmpty()) return false;
+
+        FundEntity entityFound = entity.get();
+        entityFound.setIsActive(false);
+
+        repository.save(entityFound);
+
+        return true;
     }
 }

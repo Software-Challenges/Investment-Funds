@@ -4,11 +4,8 @@ import com.investment.application.fund.dto.request.FundFilterRequest;
 import com.investment.application.fund.dto.request.CreateFundRequest;
 import com.investment.application.fund.dto.request.UpdateFundRequest;
 import com.investment.application.fund.dto.response.FundResponse;
-import com.investment.application.fund.port.input.IGetFundByIdQuery;
+import com.investment.application.fund.port.input.*;
 import com.investment.application.shared.dto.response.PagedResponse;
-import com.investment.application.fund.port.input.IListFundsQuery;
-import com.investment.application.fund.port.input.ICreateFundUseCase;
-import com.investment.application.fund.port.input.IUpdateFundUseCase;
 import com.investment.domain.enums.EFundCategory;
 import com.investment.infrastructure.adapter.input.dto.ApiResponse;
 import jakarta.validation.Valid;
@@ -25,8 +22,9 @@ import java.util.UUID;
 public class FundController {
     private final IGetFundByIdQuery getFundQuery;
     private final IListFundsQuery listFundsQuery;
-    private final ICreateFundUseCase saveFundUseCase;
+    private final ICreateFundUseCase createFundUseCase;
     private final IUpdateFundUseCase updateFundUseCase;
+    private final IDesactivateFundUseCase desactivateFundUseCase;
 
     @GetMapping(path = "/{fundId}")
     public ResponseEntity<ApiResponse<FundResponse>> getFundById(@PathVariable UUID fundId) {
@@ -60,7 +58,7 @@ public class FundController {
 
     @PostMapping
     public ResponseEntity<ApiResponse<FundResponse>> saveNewFund(@Valid @RequestBody CreateFundRequest request) {
-        FundResponse response = saveFundUseCase.execute(request);
+        FundResponse response = createFundUseCase.execute(request);
 
         return new ResponseEntity<>(new ApiResponse<>(HttpStatus.CREATED.value(),
                                              "Fund created successfully",
@@ -76,5 +74,14 @@ public class FundController {
                                              "Fund updated successfully",
                                                       response),
                                     HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/{fundId}")
+    public ResponseEntity<ApiResponse<Void>> desactivateFund(@PathVariable UUID fundId) {
+        desactivateFundUseCase.execute(fundId);
+
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                                           "Fund deleted successfully",
+                                              null));
     }
 }

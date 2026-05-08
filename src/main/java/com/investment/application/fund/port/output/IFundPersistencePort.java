@@ -13,9 +13,9 @@ public interface IFundPersistencePort {
 
     boolean existsByName(String name);
 
-    Fund save(Fund fund);
+    Fund create(Fund fund);
 
     Optional<Fund> update(Fund fund);
 
-    void delete(UUID fundId);
+    boolean desactivate(UUID fundId);
 }
