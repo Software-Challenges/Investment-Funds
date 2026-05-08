@@ -1,11 +1,11 @@
 package com.investment.infrastructure.adapter.input;
 
-import com.investment.application.dto.request.SubscriptionFilterRequest;
-import com.investment.application.dto.response.ApiResponse;
-import com.investment.application.dto.response.PagedResponse;
-import com.investment.application.dto.response.SubscriptionResponse;
-import com.investment.application.port.input.IListSubscriptionsUseCase;
+import com.investment.application.subscription.dto.request.SubscriptionFilterRequest;
+import com.investment.application.shared.dto.response.PagedResponse;
+import com.investment.application.subscription.dto.response.SubscriptionResponse;
+import com.investment.application.subscription.port.input.IListSubscriptionsQuery;
 import com.investment.domain.enums.ESubscriptionStatus;
+import com.investment.infrastructure.adapter.input.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @RequestMapping(path = "subscriptions")
 @RequiredArgsConstructor
 public class SubscriptionController {
-    private final IListSubscriptionsUseCase useCase;
+    private final IListSubscriptionsQuery useCase;
 
     @GetMapping
     public ResponseEntity<ApiResponse<PagedResponse<SubscriptionResponse>>> getAllSubscriptions(@RequestParam(required = false, defaultValue = "0") int page,

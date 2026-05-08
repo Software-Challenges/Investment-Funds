@@ -1,6 +1,6 @@
 package com.investment.infrastructure.adapter.output.specification;
 
-import com.investment.application.dto.request.SubscriptionFilterRequest;
+import com.investment.application.subscription.dto.request.SubscriptionFilterRequest;
 import com.investment.domain.enums.ESubscriptionStatus;
 import com.investment.infrastructure.entity.SubscriptionEntity;
 import org.springframework.data.jpa.domain.Specification;

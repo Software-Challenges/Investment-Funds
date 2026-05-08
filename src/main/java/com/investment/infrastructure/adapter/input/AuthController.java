@@ -1,9 +1,9 @@
 package com.investment.infrastructure.adapter.input;
 
-import com.investment.application.dto.request.LoginRequest;
-import com.investment.application.dto.response.ApiResponse;
-import com.investment.application.dto.response.LoginResponse;
-import com.investment.application.port.input.ILoginUseCase;
+import com.investment.application.auth.dto.request.LoginRequest;
+import com.investment.application.auth.dto.response.LoginResponse;
+import com.investment.application.auth.port.input.ILoginUseCase;
+import com.investment.infrastructure.adapter.input.dto.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

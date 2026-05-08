@@ -1,8 +1,8 @@
 package com.investment.infrastructure.adapter.output;
 
-import com.investment.application.dto.request.FundFilterRequest;
-import com.investment.application.dto.response.PagedResponse;
-import com.investment.application.port.output.IFundPersistencePort;
+import com.investment.application.fund.dto.request.FundFilterRequest;
+import com.investment.application.shared.dto.response.PagedResponse;
+import com.investment.application.fund.port.output.IFundPersistencePort;
 import com.investment.domain.enums.EFundCategory;
 import com.investment.domain.model.Fund;
 import com.investment.infrastructure.adapter.output.mapper.FundMapper;

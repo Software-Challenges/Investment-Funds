@@ -1,6 +1,6 @@
 package com.investment.infrastructure.config;
 
-import com.investment.application.port.output.ITokenPort;
+import com.investment.application.auth.port.output.ITokenPort;
 import com.investment.infrastructure.adapter.input.filter.TokenAuthenticationFilter;
 import com.investment.infrastructure.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;

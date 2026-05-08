@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.investment.application.port.output.ITokenPort;
+import com.investment.application.auth.port.output.ITokenPort;
 import com.investment.domain.model.Role;
 import com.investment.domain.model.User;
 import org.springframework.beans.factory.annotation.Value;

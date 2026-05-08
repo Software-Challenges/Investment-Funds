@@ -1,6 +1,6 @@
 package com.investment.infrastructure.adapter.output.specification;
 
-import com.investment.application.dto.request.FundFilterRequest;
+import com.investment.application.fund.dto.request.FundFilterRequest;
 import com.investment.domain.enums.EFundCategory;
 import com.investment.infrastructure.entity.FundEntity;
 import org.springframework.data.jpa.domain.Specification;

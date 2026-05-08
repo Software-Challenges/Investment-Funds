@@ -1,10 +1,9 @@
 package com.investment.infrastructure.adapter.output;
 
-import com.investment.application.port.output.IUserPersistencePort;
+import com.investment.application.user.port.output.IUserPersistencePort;
 import com.investment.domain.model.User;
 import com.investment.infrastructure.adapter.output.mapper.UserMapper;
 import com.investment.infrastructure.adapter.output.repository.IUserRepository;
-import com.investment.infrastructure.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.Optional;

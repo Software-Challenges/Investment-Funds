@@ -1,8 +1,8 @@
 package com.investment.infrastructure.adapter.output;
 
-import com.investment.application.dto.request.SubscriptionFilterRequest;
-import com.investment.application.dto.response.PagedResponse;
-import com.investment.application.port.output.ISubscriptionPersistencePort;
+import com.investment.application.subscription.dto.request.SubscriptionFilterRequest;
+import com.investment.application.shared.dto.response.PagedResponse;
+import com.investment.application.subscription.port.output.ISubscriptionPersistencePort;
 import com.investment.domain.model.Subscription;
 import com.investment.infrastructure.adapter.output.mapper.SubscriptionMapper;
 import com.investment.infrastructure.adapter.output.repository.ISubscriptionRepository;
