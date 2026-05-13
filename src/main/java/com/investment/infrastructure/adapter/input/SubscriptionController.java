@@ -2,17 +2,16 @@ package com.investment.infrastructure.adapter.input;
 
 import com.investment.application.subscription.dto.request.SubscriptionFilterRequest;
 import com.investment.application.shared.dto.response.PagedResponse;
+import com.investment.application.subscription.dto.response.SubscriptionDetailResponse;
 import com.investment.application.subscription.dto.response.SubscriptionResponse;
+import com.investment.application.subscription.port.input.IGetSubscriptionByIdQuery;
 import com.investment.application.subscription.port.input.IListSubscriptionsQuery;
 import com.investment.domain.enums.ESubscriptionStatus;
 import com.investment.infrastructure.adapter.input.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -20,7 +19,8 @@ import java.util.UUID;
 @RequestMapping(path = "subscriptions")
 @RequiredArgsConstructor
 public class SubscriptionController {
-    private final IListSubscriptionsQuery useCase;
+    private final IGetSubscriptionByIdQuery getSubscriptionQuery;
+    private final IListSubscriptionsQuery listSubscriptionsQuery;
 
     @GetMapping
     public ResponseEntity<ApiResponse<PagedResponse<SubscriptionResponse>>> getAllSubscriptions(@RequestParam(required = false, defaultValue = "0") int page,
@@ -38,10 +38,19 @@ public class SubscriptionController {
                                                                      .cancelledTo(cancelledTo)
                                                                      .build();
 
-        PagedResponse<SubscriptionResponse> response = useCase.execute(page, size, filters);
+        PagedResponse<SubscriptionResponse> response = listSubscriptionsQuery.execute(page, size, filters);
 
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                           "Subscriptions retrieved successfully",
+                                                   response));
+    }
+
+    @GetMapping(path = "/{subscriptionId}")
+    public ResponseEntity<ApiResponse<SubscriptionDetailResponse>> getSubscriptionById(@PathVariable UUID subscriptionId) {
+        SubscriptionDetailResponse response = getSubscriptionQuery.execute(subscriptionId);
+
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                                           "Subscription retrieved successfully",
                                                    response));
     }
 }

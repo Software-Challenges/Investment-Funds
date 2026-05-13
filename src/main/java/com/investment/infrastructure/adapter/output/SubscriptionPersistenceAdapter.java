@@ -15,12 +15,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 public class SubscriptionPersistenceAdapter implements ISubscriptionPersistencePort {
     private final ISubscriptionRepository repository;
     private final SubscriptionMapper mapper;
+
+    @Override
+    public Optional<Subscription> findById(UUID subscriptionId) {
+        return repository.findById(subscriptionId)
+                         .map(mapper::toDomain);
+    }
 
     @Override
     public PagedResponse<Subscription> findAll(int page, int size, SubscriptionFilterRequest filters) {

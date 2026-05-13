@@ -7,13 +7,12 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Builder
-public record SubscriptionResponse(
+public record SubscriptionDetailResponse(
         UUID id,
-        UUID userId,
-        UUID fundId,
-        String fundName,
         BigDecimal amount,
         ESubscriptionStatus status,
         LocalDateTime subscribedAt,
-        LocalDateTime cancelledAt
+        LocalDateTime cancelledAt,
+        UserSummaryResponse user,
+        FundSummaryResponse fund
 ) { }

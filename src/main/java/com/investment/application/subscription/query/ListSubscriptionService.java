@@ -23,15 +23,16 @@ public class ListSubscriptionService implements IListSubscriptionsQuery {
 
         List<SubscriptionResponse> subscriptionResponseList = response.content()
                                                                       .stream()
-                                                                      .map(subscription -> new SubscriptionResponse(subscription.getId(),
-                                                                                                                               subscription.getUser().getId(),
-                                                                                                                               subscription.getFund().getId(),
-                                                                                                                               subscription.getFund().getName(),
-                                                                                                                               subscription.getAmount(),
-                                                                                                                               subscription.getStatus(),
-                                                                                                                               subscription.getSubscribedAt(),
-                                                                                                                               subscription.getCancelledAt())
-                                                                      )
+                                                                      .map(subs -> SubscriptionResponse.builder()
+                                                                                                                  .id(subs.getId())
+                                                                                                                  .userId(subs.getUser().getId())
+                                                                                                                  .fundId(subs.getFund().getId())
+                                                                                                                  .fundName(subs.getFund().getName())
+                                                                                                                  .amount(subs.getAmount())
+                                                                                                                  .status(subs.getStatus())
+                                                                                                                  .subscribedAt(subs.getSubscribedAt())
+                                                                                                                  .cancelledAt(subs.getCancelledAt())
+                                                                                                                  .build())
                                                                       .toList();
 
         return PagedResponse.<SubscriptionResponse>builder()
