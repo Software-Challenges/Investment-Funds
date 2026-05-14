@@ -6,11 +6,12 @@ import com.investment.infrastructure.entity.RoleEntity;
 import com.investment.infrastructure.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
-
 import java.util.Set;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
+    UserEntity toEntity(User domain);
+
     User toDomain(UserEntity entity);
 
     Set<Role> toRoleSet(Set<RoleEntity> roles);

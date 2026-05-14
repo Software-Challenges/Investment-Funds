@@ -57,7 +57,7 @@ public class FundController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<FundResponse>> saveNewFund(@Valid @RequestBody CreateFundRequest request) {
+    public ResponseEntity<ApiResponse<FundResponse>> createNewFund(@Valid @RequestBody CreateFundRequest request) {
         FundResponse response = createFundUseCase.execute(request);
 
         return new ResponseEntity<>(new ApiResponse<>(HttpStatus.CREATED.value(),

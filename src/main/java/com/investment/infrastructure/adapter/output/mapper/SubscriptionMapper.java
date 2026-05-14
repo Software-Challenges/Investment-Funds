@@ -14,6 +14,8 @@ import java.util.List;
         }
 )
 public interface SubscriptionMapper {
+    SubscriptionEntity toEntity(Subscription domain);
+
     Subscription toDomain(SubscriptionEntity entity);
 
     List<Subscription> toDomainList(List<SubscriptionEntity> entities);

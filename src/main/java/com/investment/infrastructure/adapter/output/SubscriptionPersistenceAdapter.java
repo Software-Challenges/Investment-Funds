@@ -3,6 +3,7 @@ package com.investment.infrastructure.adapter.output;
 import com.investment.application.subscription.dto.request.SubscriptionFilterRequest;
 import com.investment.application.shared.dto.response.PagedResponse;
 import com.investment.application.subscription.port.output.ISubscriptionPersistencePort;
+import com.investment.domain.enums.ESubscriptionStatus;
 import com.investment.domain.model.Subscription;
 import com.investment.infrastructure.adapter.output.mapper.SubscriptionMapper;
 import com.investment.infrastructure.adapter.output.repository.ISubscriptionRepository;
@@ -47,5 +48,16 @@ public class SubscriptionPersistenceAdapter implements ISubscriptionPersistenceP
                             .totalPages(entityPage.getTotalPages())
                             .last(entityPage.isLast())
                             .build();
+    }
+
+    @Override
+    public boolean existsByUserIdAndFundIdAndStatus(UUID userId, UUID fundId, ESubscriptionStatus status) {
+        return repository.existsByUserIdAndFundIdAndStatus(userId, fundId, status);
+    }
+
+    @Override
+    public Subscription createSubscriptionFund(Subscription subscription) {
+        SubscriptionEntity entity = mapper.toEntity(subscription);
+        return mapper.toDomain(repository.save(entity));
     }
 }
